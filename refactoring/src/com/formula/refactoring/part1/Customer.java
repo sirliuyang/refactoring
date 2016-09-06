@@ -25,43 +25,17 @@ public class Customer {
 		Iterator iteratorRentals = rentals.iterator();
 		String result = "Rental Record for " + getName() + "\n";
 		while (iteratorRentals.hasNext()) {
-			Rental each = (Rental) iteratorRentals.next();
-			double thisAmount = amountFor(each);
-			frequentRenterPoints++;
+			Rental eachRental = (Rental) iteratorRentals.next();
+			frequentRenterPoints = eachRental.getFrequentRenterPoints();
 
-			if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE) && each.getDaysRented() > 1)
-				frequentRenterPoints++;
-
-			result += "\t" + each.getMovie().getTitle() + "\t" + String.valueOf(thisAmount) + "\n";
-			totalAmount += thisAmount;
+			result += "\t" + eachRental.getMovie().getTitle() + "\t" + String.valueOf(eachRental.getCharge()) + "\n";
+			totalAmount += eachRental.getCharge();
 		}
 
 		result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
 		result += "You earned " + String.valueOf(frequentRenterPoints) + " frequentRenterPoints";
 
 		return result;
-	}
-
-	private double amountFor(Rental each) {
-		double thisAmount = 0;
-		switch (each.getMovie().getPriceCode()) {
-		case Movie.REGULAR:
-			thisAmount += 2;
-			if (each.getDaysRented() > 2) {
-				thisAmount += (each.getDaysRented() - 2) * 1.5;
-			}
-			break;
-		case Movie.CHILDRENS:
-			thisAmount += 1.5;
-			if (each.getDaysRented() > 3) {
-				thisAmount += (each.getDaysRented() - 3) * 1.5;
-				break;
-			}
-		case Movie.NEW_RELEASE:
-			thisAmount += each.getDaysRented() * 3;
-			break;
-		}
-		return thisAmount;
 	}
 
 }
