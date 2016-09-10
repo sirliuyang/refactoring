@@ -4,4 +4,5 @@ public interface Movie {
 	double getCharge(int daysRented);
 
 	String getTitle();
+	
 }
